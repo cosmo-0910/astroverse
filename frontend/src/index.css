@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --font-primary: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  
+  --bg-app: #FAF9FE;
+  --bg-sidebar: #F4F3FA;
+  --bg-card: #FFFFFF;
+  --bg-active: #0B0B1E;
+  
+  --text-primary: #0F0F2D;
+  --text-secondary: #747492;
+  --text-light: #A0A0C0;
+  
+  --primary: #6366F1;
+  --primary-hover: #4F46E5;
+  --accent: #EC4899;
+  --accent-light: #FCE7F3;
+  --success: #10B981;
+  --success-light: #D1FAE5;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --danger-light: #FEE2E2;
+  
+  --border-color: #E2E2F0;
+  --border-radius-sm: 8px;
+  --border-radius-md: 14px;
+  --border-radius-lg: 20px;
+  
+  --shadow-sm: 0 2px 8px rgba(99, 102, 241, 0.04);
+  --shadow-md: 0 10px 30px rgba(99, 102, 241, 0.06);
+  --shadow-lg: 0 20px 40px rgba(99, 102, 241, 0.1);
+  
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-light);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-fade {
+  animation: fadeIn var(--transition-normal);
+}
+
+.animate-slide {
+  animation: slideIn var(--transition-normal);
+}
+
+.animate-scale {
+  animation: scaleUp var(--transition-fast);
+}

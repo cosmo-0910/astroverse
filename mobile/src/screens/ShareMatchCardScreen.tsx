@@ -1,0 +1,430 @@
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
+import { BackArrowIcon, ShareIcon } from '../components/CustomIcons';
+import { ScreenType } from '../navigation/AppNavigator';
+
+interface ShareMatchCardScreenProps {
+  onNavigate: (screen: ScreenType) => void;
+}
+
+type FormatType = 'square' | 'story';
+type ModeType = 'dating' | 'friendship';
+
+export default function ShareMatchCardScreen({ onNavigate }: ShareMatchCardScreenProps) {
+  const [format, setFormat] = useState<FormatType>('square');
+  const [mode, setMode] = useState<ModeType>('dating');
+
+  return (
+    <View style={styles.container}>
+      {/* Top Header Bar */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => onNavigate('CompatibilityCenter')} activeOpacity={0.7} style={styles.headerBtn}>
+          <BackArrowIcon color="#1F1936" size={18} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Share Preview</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.headerBtn}>
+          <ShareIcon color="#1F1936" size={18} />
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+        {/* Toggle selectors */}
+        <View style={styles.toggleRow}>
+          <View style={styles.toggleGroup}>
+            <TouchableOpacity
+              onPress={() => setFormat('square')}
+              style={[styles.toggleBtn, format === 'square' && styles.toggleBtnActive]}
+            >
+              <Text style={[styles.toggleText, format === 'square' && styles.toggleTextActive]}>Square</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setFormat('story')}
+              style={[styles.toggleBtn, format === 'story' && styles.toggleBtnActive]}
+            >
+              <Text style={[styles.toggleText, format === 'story' && styles.toggleTextActive]}>Story</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.toggleGroup}>
+            <TouchableOpacity
+              onPress={() => setMode('dating')}
+              style={[styles.toggleBtn, mode === 'dating' && styles.toggleBtnActive]}
+            >
+              <Text style={[styles.toggleText, mode === 'dating' && styles.toggleTextActive]}>Dating</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setMode('friendship')}
+              style={[styles.toggleBtn, mode === 'friendship' && styles.toggleBtnActive]}
+            >
+              <Text style={[styles.toggleText, mode === 'friendship' && styles.toggleTextActive]}>Friend</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Live Card Preview Box */}
+        <View style={styles.previewContainer}>
+          <ImageBackground
+            source={require('../../assets/cosmic_bg.png')}
+            imageStyle={styles.cardBgRadius}
+            style={[
+              styles.cardBackground,
+              format === 'square' ? styles.cardSquare : styles.cardStory
+            ]}
+          >
+            {/* Dark overlay for cosmic contrast */}
+            <View style={styles.cardOverlay}>
+              {/* Card Header branding */}
+              <View style={styles.cardHeader}>
+                <Text style={styles.brandingText}>ASTROVERSE</Text>
+                <TouchableOpacity style={styles.shareBtnCircle}>
+                  <ShareIcon color="#FFFFFF" size={14} />
+                </TouchableOpacity>
+              </View>
+
+              {/* Card Body - Content changes depending on Format and Mode */}
+              {format === 'square' && mode === 'dating' && (
+                <View style={styles.squareContent}>
+                  <Text style={styles.namesText}>Sarah ❤️ Michael</Text>
+                  <View style={styles.scoreCircle}>
+                    <Text style={styles.scoreNumber}>92%</Text>
+                    <Text style={styles.scoreLabel}>Match Score</Text>
+                  </View>
+                </View>
+              )}
+
+              {format === 'square' && mode === 'friendship' && (
+                <View style={styles.squareContent}>
+                  <Text style={styles.namesText}>Alex ↔️ Michael</Text>
+                  <Text style={styles.linkSubtext}>Friendship Cosmic Link</Text>
+                  <View style={styles.scoreCircle}>
+                    <Text style={styles.scoreNumber}>77%</Text>
+                    <Text style={styles.scoreLabel}>Compatibility</Text>
+                  </View>
+                  <View style={styles.bottomChips}>
+                    <Text style={styles.chipText}>⚔️ Adventures</Text>
+                    <Text style={styles.chipText}>🧠 Mental Connection</Text>
+                    <Text style={styles.chipText}>⚖️ Legal Bond</Text>
+                  </View>
+                  <Text style={styles.footnote}>Generated by Astroverse</Text>
+                </View>
+              )}
+
+              {format === 'story' && mode === 'friendship' && (
+                <View style={styles.storyContent}>
+                  <Text style={styles.storySublabel}>Friendship Compatibility</Text>
+                  <Text style={styles.namesTextStory}>Alex 🌸 Michael</Text>
+                  
+                  <View style={styles.scoreCircleStory}>
+                    <Text style={styles.scoreNumber}>88%</Text>
+                    <Text style={styles.scoreLabel}>Soul-Match</Text>
+                  </View>
+
+                  <View style={styles.storyBlocks}>
+                    <View style={styles.storyBlock}>
+                      <Text style={styles.blockTitle}>Shared Adventures</Text>
+                      <Text style={styles.blockDesc}>Expanding horizons together through new experiences.</Text>
+                    </View>
+                    <View style={styles.storyBlock}>
+                      <Text style={styles.blockTitle}>Mental Connection</Text>
+                      <Text style={styles.blockDesc}>Unique ideas and intellectual synergy.</Text>
+                    </View>
+                  </View>
+                </View>
+              )}
+
+              {format === 'story' && mode === 'dating' && (
+                <View style={styles.storyContent}>
+                  <Text style={styles.storySublabel}>⭐️ Friendship Compatibility ⭐️</Text>
+                  <Text style={styles.namesTextStory}>Alex ❤️ Michael</Text>
+                  
+                  <View style={styles.scoreCircleStory}>
+                    <Text style={styles.scoreNumber}>88%</Text>
+                    <Text style={styles.scoreLabel}>Match Score</Text>
+                  </View>
+
+                  <View style={styles.storyBlocks}>
+                    <View style={styles.storyBlock}>
+                      <Text style={styles.blockTitle}>Emotional Harmony</Text>
+                      <Text style={styles.blockDesc}>Your Moon placements create strong emotional understanding.</Text>
+                    </View>
+                    <View style={styles.storyBlock}>
+                      <Text style={styles.blockTitle}>Great Communication</Text>
+                      <Text style={styles.blockDesc}>Mercury aspects indicate natural and fluid conversations.</Text>
+                    </View>
+                    <View style={styles.storyBlock}>
+                      <Text style={styles.blockTitle}>Long-Term Potential</Text>
+                      <Text style={styles.blockDesc}>Venus and Saturn connections support enduring stability.</Text>
+                    </View>
+                  </View>
+                </View>
+              )}
+            </View>
+          </ImageBackground>
+        </View>
+
+        {/* Action Button */}
+        <TouchableOpacity activeOpacity={0.8} style={styles.actionBtn}>
+          <Text style={styles.actionBtnText}>Share to Instagram Stories</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
+  );
+}
+
+const { width } = Dimensions.get('window');
+const cardWidth = width - 48;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5F2F9',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingTop: 60,
+    paddingHorizontal: 24,
+    paddingBottom: 15,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderColor: '#ECE8F2',
+  },
+  headerBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#ECE8F2',
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontSize: 16,
+    color: '#1F1936',
+    fontWeight: '700',
+    fontFamily: 'System',
+  },
+  scrollContainer: {
+    paddingHorizontal: 24,
+    paddingVertical: 20,
+    alignItems: 'center',
+  },
+  toggleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: 20,
+  },
+  toggleGroup: {
+    flexDirection: 'row',
+    backgroundColor: '#FAF8FC',
+    borderRadius: 16,
+    padding: 3,
+    borderWidth: 1,
+    borderColor: '#ECE8F2',
+    width: '48%',
+  },
+  toggleBtn: {
+    flex: 1,
+    height: 32,
+    borderRadius: 13,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  toggleBtnActive: {
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 1,
+  },
+  toggleText: {
+    fontSize: 12,
+    color: '#8E8E9F',
+    fontWeight: '600',
+  },
+  toggleTextActive: {
+    color: '#1F1936',
+  },
+  previewContainer: {
+    width: cardWidth,
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  cardBackground: {
+    width: cardWidth,
+    overflow: 'hidden',
+  },
+  cardBgRadius: {
+    borderRadius: 24,
+  },
+  cardSquare: {
+    height: cardWidth,
+  },
+  cardStory: {
+    height: cardWidth * 1.8,
+  },
+  cardOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(5, 2, 15, 0.45)', // cosmic wash
+    padding: 20,
+    justifyContent: 'space-between',
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
+  brandingText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '700',
+    letterSpacing: 2,
+  },
+  shareBtnCircle: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  squareContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  namesText: {
+    color: '#FFFFFF',
+    fontSize: 22,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 24,
+  },
+  linkSubtext: {
+    color: '#E2E8F0',
+    fontSize: 12,
+    marginTop: -20,
+    marginBottom: 20,
+    fontWeight: '600',
+  },
+  scoreCircle: {
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    borderWidth: 6,
+    borderColor: '#FCD34D', // Gold progress ring
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(15, 9, 42, 0.3)',
+  },
+  scoreNumber: {
+    color: '#FFFFFF',
+    fontSize: 28,
+    fontWeight: '800',
+  },
+  scoreLabel: {
+    color: '#E2E8F0',
+    fontSize: 10,
+    fontWeight: '600',
+    marginTop: 4,
+    textTransform: 'uppercase',
+  },
+  bottomChips: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 20,
+  },
+  chipText: {
+    color: '#FFFFFF',
+    fontSize: 9,
+    fontWeight: '700',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 10,
+  },
+  footnote: {
+    color: '#94A3B8',
+    fontSize: 9,
+    marginTop: 12,
+    fontWeight: '600',
+  },
+  storyContent: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  storySublabel: {
+    color: '#FCD34D',
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 8,
+  },
+  namesTextStory: {
+    color: '#FFFFFF',
+    fontSize: 26,
+    fontWeight: '800',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  scoreCircleStory: {
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    borderWidth: 8,
+    borderColor: '#FCD34D',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(15, 9, 42, 0.3)',
+    marginBottom: 40,
+  },
+  storyBlocks: {
+    width: '100%',
+  },
+  storyBlock: {
+    backgroundColor: 'rgba(15, 9, 42, 0.5)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+    borderRadius: 16,
+    padding: 14,
+    marginBottom: 10,
+    width: '100%',
+  },
+  blockTitle: {
+    color: '#EC4899',
+    fontSize: 14,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  blockDesc: {
+    color: '#E2E8F0',
+    fontSize: 11,
+    lineHeight: 15,
+  },
+  actionBtn: {
+    width: '100%',
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: '#79247E', // Simulating gradient button
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#79247E',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  actionBtnText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '700',
+  },
+});
